@@ -57313,12 +57313,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             body: null
         };
+    },
+
+
+    methods: {
+        handleMessageInput: function handleMessageInput(e) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+                e.preventDefault();
+                this.send();
+            }
+        },
+        send: function send() {
+            console.log(this.body);
+        }
     }
 });
 
@@ -57333,29 +57348,44 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "chat" },
-    [_c("chat-messages"), _vm._v(" "), _vm._m(0)],
+    [
+      _c("chat-messages"),
+      _vm._v(" "),
+      _c("form", { staticClass: "chat_from", attrs: { action: "#" } }, [
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.body,
+              expression: "body"
+            }
+          ],
+          staticClass: "chat__form-input",
+          attrs: { id: "body", cols: "30", rows: "4" },
+          domProps: { value: _vm.body },
+          on: {
+            keydown: _vm.handleMessageInput,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.body = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "chat__form-helptext" }, [
+          _vm._v(
+            "\n            Hit Return send or Shift + Return for a new line\n        "
+          )
+        ])
+      ])
+    ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", { staticClass: "chat_from", attrs: { action: "#" } }, [
-      _c("textarea", {
-        staticClass: "chat__form-input",
-        attrs: { id: "body", cols: "30", rows: "4" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "chat__form-helptext" }, [
-        _vm._v(
-          "\n            Hit Return send or Ctrl + Return for a new line\n        "
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
