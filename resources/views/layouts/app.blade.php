@@ -12,6 +12,16 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'user' => [
+                'authenticated' => auth()->check(),
+                'id' => auth()->check() ? auth()->user()->id : null,
+                'name' => auth()->check() ? auth()->user()->name : null
+            ]
+        ]) !!}
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">

@@ -18,6 +18,8 @@
 </template>
 
 <script>
+    import Bus from '../../bus'
+    import moment from 'moment'
     export default {
         data() {
             return {
@@ -33,8 +35,29 @@
                 }
             },
 
+            buildTempMessage() {
+                let tempId = Date.now();
+
+                return {
+                    id: tempId,
+                    body: this.body,
+                    created_at: moment().utc(0).format('YYYY-MM-DD HH:mm:ss'),
+                    selfOwned: true,
+                    user: {
+                        name: Laravel.user.name
+                    }
+                }
+            },
+
             send() {
-                console.log(this.body);
+                if (!this.body || this.body.trim() === '') {
+                    return
+                }
+
+                let tempMessage = this.buildTempMessage();
+
+                Bus.$emit('message.added', tempMessage);
+                this.body = null;
             }
         }
     }
