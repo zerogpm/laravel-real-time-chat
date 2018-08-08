@@ -20,7 +20,16 @@
             Bus.$on('message.added', (message) => {
                this.messages.unshift(message);
                this.$refs.messages.scrollTop = 0
+            }).$on('messages.removed', (message) => {
+                this.removeMessage(message.id)
             });
+        },
+        methods: {
+            removeMessage(id) {
+                this.messages = this.messages.filter((message) => {
+                    return message.id !== id;
+                })
+            }
         }
     }
 </script>

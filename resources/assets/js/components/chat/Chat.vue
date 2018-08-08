@@ -23,12 +23,16 @@
     export default {
         data() {
             return {
-                body: null
+                body: null,
+                bodyBackedUp: null
             }
         },
 
         methods: {
             handleMessageInput(e) {
+
+                this.bodyBackedUp = this.body;
+
                 if (e.keyCode === 13 && !e.shiftKey) {
                     e.preventDefault();
                     this.send();
@@ -57,6 +61,14 @@
                 let tempMessage = this.buildTempMessage();
 
                 Bus.$emit('message.added', tempMessage);
+
+                axios.post('/chat/messages', {
+                    body: this.body.trim()
+                }).catch(() => {
+                    this.body = this.bodyBackedUp;
+                    Bus.$emit('messages.removed', tempMessage)
+                });
+
                 this.body = null;
             }
         }
