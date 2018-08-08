@@ -63,3 +63,5 @@ if (typeof io !== 'undefined') {
         host: window.location.hostname + ':6001',
     });
 }
+
+require('./echo');

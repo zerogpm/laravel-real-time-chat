@@ -1,15 +1,35 @@
 <template>
     <div class="user">
-        <div class="user__header">1 user online</div>
-        <div class="users__user">
-            <a href="#">Chris</a>
+        <div class="user__header">{{ users.length }} {{ pluralize('user', users.length) }} online</div>
+        <div class="users__user" v-for="user in users">
+            <a href="#">{{ user.name }}</a>
         </div>
     </div>
 </template>
 
 <script>
+    import pluralize from 'pluralize'
+    import Bus from '../../bus'
     export default {
-        name: "Users"
+        data () {
+          return {
+            users: []
+          }
+        },
+        methods: {
+            pluralize: pluralize
+        },
+        mounted () {
+            Bus.$on('users.here', (users) => {
+                this.users = users
+            }).$on('users.joined', (user) => {
+                this.users.unshift(user);
+            }).$on('users.leaving', (user) => {
+                this.users = this.users.filter((olderUser) => {
+                    return olderUser.id !== user.id
+                });
+            })
+        }
     }
 </script>
 
