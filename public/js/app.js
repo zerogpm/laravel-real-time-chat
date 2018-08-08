@@ -73752,7 +73752,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var tempMessage = this.buildTempMessage();
 
-            __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('message.added', tempMessage);
+            __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('messages.added', tempMessage);
 
             axios.post('/chat/messages', {
                 body: this.body.trim()
@@ -74213,7 +74213,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$on('messages.added', function (message) {
             _this.messages.unshift(message);
-            _this.$refs.messages.scrollTop = 0;
+
+            if (message.selfOwned) {
+                _this.$refs.messages.scrollTop = 0;
+            }
         }).$on('messages.removed', function (message) {
             _this.removeMessage(message.id);
         });

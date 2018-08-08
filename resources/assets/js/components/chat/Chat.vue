@@ -60,7 +60,7 @@
 
                 let tempMessage = this.buildTempMessage();
 
-                Bus.$emit('message.added', tempMessage);
+                Bus.$emit('messages.added', tempMessage);
 
                 axios.post('/chat/messages', {
                     body: this.body.trim()

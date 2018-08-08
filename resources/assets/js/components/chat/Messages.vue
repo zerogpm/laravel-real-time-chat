@@ -18,8 +18,11 @@
             });
 
             Bus.$on('messages.added', (message) => {
-               this.messages.unshift(message);
-               this.$refs.messages.scrollTop = 0
+                this.messages.unshift(message);
+
+                if (message.selfOwned) {
+                    this.$refs.messages.scrollTop = 0
+                }
             }).$on('messages.removed', (message) => {
                 this.removeMessage(message.id)
             });
