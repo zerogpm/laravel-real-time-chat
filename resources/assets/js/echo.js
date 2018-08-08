@@ -9,4 +9,7 @@ Echo.join('chat')
     })
     .leaving((user) => {
         Bus.$emit('users.leaving', user)
+    })
+    .listen('Chat.MessageCreated', (e) => {
+        Bus.$emit('messages.added', e.message)
     });

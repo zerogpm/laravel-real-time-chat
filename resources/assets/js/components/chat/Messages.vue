@@ -17,7 +17,7 @@
                 this.messages = response.data
             });
 
-            Bus.$on('message.added', (message) => {
+            Bus.$on('messages.added', (message) => {
                this.messages.unshift(message);
                this.$refs.messages.scrollTop = 0
             }).$on('messages.removed', (message) => {

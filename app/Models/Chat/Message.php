@@ -4,6 +4,7 @@ namespace App\Models\Chat;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Message extends Model
 {
@@ -17,7 +18,7 @@ class Message extends Model
 
     public function getSelfOwnedAttribute()
     {
-        return $this->user_id === auth()->user()->id;
+        return $this->user_id === Auth::user()->id;
     }
 
     public function user()

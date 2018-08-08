@@ -73146,6 +73146,8 @@ Echo.join('chat').here(function (users) {
     __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('users.joined', user);
 }).leaving(function (user) {
     __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('users.leaving', user);
+}).listen('Chat.MessageCreated', function (e) {
+    __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$emit('messages.added', e.message);
 });
 
 /***/ }),
@@ -74209,7 +74211,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.messages = response.data;
         });
 
-        __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$on('message.added', function (message) {
+        __WEBPACK_IMPORTED_MODULE_0__bus__["a" /* default */].$on('messages.added', function (message) {
             _this.messages.unshift(message);
             _this.$refs.messages.scrollTop = 0;
         }).$on('messages.removed', function (message) {
